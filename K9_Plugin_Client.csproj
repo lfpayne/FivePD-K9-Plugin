@@ -61,6 +61,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "C:\FXServer\txData\CFXDefault_178352.base\resources\fivepd\plugins\"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "C:\FXServer\txData\CFXDefault_178352.base\resources\fivepd\plugins\k9\"</PostBuildEvent>
   </PropertyGroup>
 </Project>

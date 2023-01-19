@@ -3,6 +3,8 @@ using CitizenFX.Core.Native;
 using FivePD.API;
 using FivePD.API.Utils;
 using MenuAPI;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,8 +58,13 @@ namespace K9_Plugin
         private bool noShitCollision = false;
         private int shit = 0;
 
+        //Config Data
+        private bool useAcePerms = true;
+
         internal K9()
         {
+            LoadConfigData();
+
             BuildJobs();
             BuildMenu();
 
@@ -67,13 +74,15 @@ namespace K9_Plugin
             {
                 TriggerServerEvent("K9:RoleCheck");
                 await Delay(250); //give time for the server script to trigger
-                if(!hasRole) { ShowNotification("~r~For K9 Officers Only"); return; }
+
+                if(useAcePerms)
+                {
+                    if (!hasRole) { ShowNotification("~r~For K9 Officers Only"); return; }
+                }
 
                 if (!k9Menu.Visible) { k9Menu.Visible = true; }
             }), false);
             API.RegisterKeyMapping("K9Menu", "K9 Menu", "KEYBOARD", "F9");
-
-            BuildSubstanceLists();
         }
         private void HasRoles(int status)
         {
@@ -140,13 +149,23 @@ namespace K9_Plugin
                         return;
                     }
 
-                    string dogModel = "a_c_retriever"; //Bomb dog is default
-                    dogType = DogType.BOMB;
+                    string dogModel = null;
 
                     if(spawnDogOptions.GetCurrentSelection() == "Narcotics")
                     {
-                        dogModel = "a_c_shepherd";
+                        dogModel = GetModelFromConfig("Narcotics");
                         dogType = DogType.NARCOTICS;
+                    }
+                    else
+                    {
+                        dogModel = GetModelFromConfig("Bomb");
+                        dogType = DogType.BOMB;
+                    }
+
+                    if(dogModel == null)
+                    {
+                        ShowNotification("~r~Error Getting K9 Model");
+                        return;
                     }
 
                     SetAllJobsFalse();
@@ -852,35 +871,30 @@ namespace K9_Plugin
                 }
             };
         }
-        private void BuildSubstanceLists()
+        private void LoadConfigData()
         {
-            //Add Drugs
-            //--Marijuana Related
-            drugList.Add("Marijuana");
-            drugList.Add("Weed");
-            drugList.Add("Blunt");
+            //Read JSON file
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
+            var jsonConfig = JObject.Parse(config);
 
-            //--Cocaine Related
-            drugList.Add("Cocaine");
-            drugList.Add("Coke");
-            drugList.Add("Crack");
+            //Get Substance and Bomb data
+            //Drugs
+            JToken jsonDrugs = jsonConfig["Drugs"];
+            foreach (var item in jsonDrugs)
+            {
+                drugList.Add(item["Name"].ToString());
+            }
 
-            //--Meth Related
-            drugList.Add("Meth");
-            drugList.Add("Methamphetamine");
-            drugList.Add("Amphetamines");
+            //Bombs
+            JToken jsonBombs = jsonConfig["Bombs"];
+            foreach(var item in jsonBombs)
+            {
+                bombList.Add(item["Name"].ToString());
+            }
 
-            //--Other Drugs
-            drugList.Add("Ecstasy");
-            drugList.Add("Morphine");
-            drugList.Add("Heroine");
-
-            //Add Bombs
-            bombList.Add("C4");
-            bombList.Add("Accelerant");
-            bombList.Add("Semtex");
-            bombList.Add("Bomb");
-            bombList.Add("Grenade");
+            //Load DiscordPerms Option
+            JToken jsonAcePerms = jsonConfig["AcePerms"];
+            useAcePerms = jsonAcePerms[0]["IsEnabled"].Value<bool>();
         }
         private async Task WaitForAttack()
         {
@@ -1277,6 +1291,39 @@ namespace K9_Plugin
             }
 
             return hasSubstance;
+        }
+        private string GetModelFromConfig(string type)
+        {
+            string model = null;
+
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
+            var jsonConfig = JObject.Parse(config);
+            JToken json;
+            json = jsonConfig["K9Data"];
+
+            foreach(var item in json)
+            {
+                K9Data tmp = JsonConvert.DeserializeObject<K9Data>(item.ToString());
+                
+                if(tmp.DogType == type)
+                {
+                    model = tmp.Model;
+                }
+            }
+
+            return model;
+        }
+    }
+
+    public class K9Data
+    {
+        public string DogType;
+        public string Model;
+
+        public K9Data(string type, string model)
+        {
+            DogType = type;
+            Model = model;
         }
     }
 }
