@@ -874,7 +874,7 @@ namespace K9_Plugin
         private void LoadConfigData()
         {
             //Read JSON file
-            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9-plugin/config.json");
             var jsonConfig = JObject.Parse(config);
 
             //Get Substance and Bomb data
@@ -1296,7 +1296,7 @@ namespace K9_Plugin
         {
             string model = null;
 
-            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9-plugin/config.json");
             var jsonConfig = JObject.Parse(config);
             JToken json;
             json = jsonConfig["K9Data"];
