@@ -3,7 +3,8 @@ A K9 Script that interacts with FivePD to allow the use of information loaded by
 
 # Set Up
 Place the compiled .dll file in the **fivepd/plugins/k9/** folder along with the config.json file provided in this github.
-Additionally the fivepd/fxmainfest.lua file may need to be edited to allow for additional folders in the fivepd/plugins folder. Add the line ./plugins/\*\*/\*.json somewhere around line 20 to fivepd/fxmanifest.lua.
+
+Next add the line **./plugins/\*\*/\*.json** somewhere around line 20 to the file **fivepd/fxmanifest.lua**.
 
 
 # Plugin Load Error
