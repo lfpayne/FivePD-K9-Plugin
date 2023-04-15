@@ -1,0 +1,67 @@
+{
+  "K9Data": [
+    {
+      "Type": "Bomb",
+      "Model": "a_c_retriever"
+    },
+    {
+      "Type": "Narcotics",
+      "Model": "a_c_shepherd"
+    }
+  ],
+  "Drugs": [
+    {
+      "Name": "Marijuana"
+    },
+    {
+      "Name": "Weed"
+    },
+    {
+      "Name": "Blunt"
+    },
+    {
+      "Name": "Cocaine"
+    },
+    {
+      "Name": "Coke"
+    },
+    {
+      "Name": "Crack"
+    },
+    {
+      "Name": "Meth"
+    },
+    {
+      "Name": "Methamphetamine"
+    },
+    {
+      "Name": "Amphetamines"
+    },
+    {
+      "Name": "Ecstasy"
+    },
+    {
+      "Name": "Morphine"
+    },
+    {
+      "Name": "Heroine"
+    }
+  ],
+  "Bombs": [
+    {
+      "Name": "C4"
+    },
+    {
+      "Name": "Accelerant"
+    },
+    {
+      "Name": "Semtex"
+    },
+    {
+      "Name": "Bomb"
+    },
+    {
+      "Name": "Grenade"
+    }
+  ]
+}
