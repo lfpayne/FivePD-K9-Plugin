@@ -1,5 +1,8 @@
-# FivePD-K9-Plugin
-A K9 Script that interacts with FivePD to allow the use of information loaded by FivePD for Pedestrians and Vehicles. This Script allows for a Bomb Sniffing K9 and a Drug Sniffing K9.
+# Plugin Information
+Default Keybind is F9 - key can be rebound by individual user in FiveM Keybinds.
+A SUV must be used or the dog will have problems entering/exiting the vehicle, due to animation limitations.
+Config allows server owner to change dog model to any model they want.
+Config allows server owner to add or remove drugs/bombs from the list of detected items.
 
 # Set Up
 Place the compiled .dll file in the **fivepd/plugins/k9/** folder along with the config.json file provided in this github repo.
