@@ -2,7 +2,7 @@
 Default Keybind is F9 - key can be rebound by individual user in FiveM Keybinds.\
 A SUV must be used or the dog will have problems entering/exiting the vehicle, due to animation limitations.\
 Config allows server owner to change dog model to any model they want.\
-Config allows server owner to add or remove drugs/bombs from the list of detected items.\
+Config allows server owner to add or remove drugs/bombs from the list of detected items.
 
 # Set Up
 Place the compiled .dll file in the **fivepd/plugins/k9/** folder along with the config.json file provided in this github repo.
