@@ -27,9 +27,6 @@ namespace K9_Plugin
 
         private Dictionary<string, bool> k9Jobs;
 
-        //Discord Perm Check
-        private bool hasRole = false;
-
         //flags
         private bool isSitting = false;
         private bool isLayingDown = false;
@@ -58,9 +55,6 @@ namespace K9_Plugin
         private bool noShitCollision = false;
         private int shit = 0;
 
-        //Config Data
-        private bool useAcePerms = true;
-
         internal K9()
         {
             LoadConfigData();
@@ -68,28 +62,11 @@ namespace K9_Plugin
             BuildJobs();
             BuildMenu();
 
-            EventHandlers["K9:HasRoles"] += new Action<int>(HasRoles);
-
-            API.RegisterCommand("K9Menu", new Action(async () =>
+            API.RegisterCommand("K9Menu", new Action(() =>
             {
-                TriggerServerEvent("K9:RoleCheck");
-                await Delay(250); //give time for the server script to trigger
-
-                if(useAcePerms)
-                {
-                    if (!hasRole) { ShowNotification("~r~For K9 Officers Only"); return; }
-                }
-
                 if (!k9Menu.Visible) { k9Menu.Visible = true; }
             }), false);
             API.RegisterKeyMapping("K9Menu", "K9 Menu", "KEYBOARD", "F9");
-        }
-        private void HasRoles(int status)
-        {
-            if(status == 1)
-            {
-                hasRole = true;
-            }
         }
         private void BuildMenu()
         {
@@ -874,7 +851,7 @@ namespace K9_Plugin
         private void LoadConfigData()
         {
             //Read JSON file
-            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9-plugin/config.json");
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
             var jsonConfig = JObject.Parse(config);
 
             //Get Substance and Bomb data
@@ -891,10 +868,6 @@ namespace K9_Plugin
             {
                 bombList.Add(item["Name"].ToString());
             }
-
-            //Load DiscordPerms Option
-            JToken jsonAcePerms = jsonConfig["AcePerms"];
-            useAcePerms = jsonAcePerms[0]["IsEnabled"].Value<bool>();
         }
         private async Task WaitForAttack()
         {
@@ -1296,7 +1269,7 @@ namespace K9_Plugin
         {
             string model = null;
 
-            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9-plugin/config.json");
+            string config = API.LoadResourceFile(API.GetCurrentResourceName(), "plugins/k9/config.json");
             var jsonConfig = JObject.Parse(config);
             JToken json;
             json = jsonConfig["K9Data"];
