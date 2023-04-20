@@ -1,4 +1,5 @@
 # Plugin Information
+Aiming a gun at a Pedestrian and pressing 'H' will send the dog to take down the targeted suspect. Downed suspect can be revived.\
 Default Keybind is F9 - key can be rebound by individual user in FiveM Keybinds.\
 A SUV must be used or the dog will have problems entering/exiting the vehicle, due to animation limitations.\
 Config allows server owner to change dog model to any model they want.\
